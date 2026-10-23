@@ -4155,9 +4155,113 @@
             background: rgba(15, 23, 42, 0.04);
         }
 
-        body.light-mode .launch-screen .launch-simulation-note {
-            color: #7c6a45;
+        /* Aviso de hallazgo */
+        .found-notice-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(4, 6, 9, 0.72);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
         }
+
+        .found-notice-overlay.show {
+            display: flex;
+            animation: found-notice-fade 0.2s ease-out;
+        }
+
+        .found-notice {
+            width: min(340px, 100%);
+            padding: 28px 24px 22px;
+            border: 1px solid rgba(82, 196, 124, 0.35);
+            border-radius: 22px;
+            background: linear-gradient(180deg, #1b2027, #12161b);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(82, 196, 124, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            text-align: center;
+            animation: found-notice-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+        }
+
+        .found-notice-icon {
+            display: grid;
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 16px;
+            place-items: center;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(82, 196, 124, 0.28), rgba(82, 196, 124, 0.08));
+            border: 1px solid rgba(82, 196, 124, 0.5);
+            color: #52c47c;
+        }
+
+        .found-notice-title {
+            margin-bottom: 8px;
+            color: #f1f3f5;
+            font-size: 19px;
+            font-weight: 750;
+        }
+
+        .found-notice-text {
+            margin: 0 0 20px;
+            color: #9aa3ad;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .found-notice-text strong {
+            color: #d7dce1;
+            font-weight: 650;
+        }
+
+        .found-notice-btn {
+            width: 100%;
+            min-height: 46px;
+            border: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #5fd48a, #3aa862);
+            color: #07140c;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 750;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(82, 196, 124, 0.25);
+            transition: transform 0.15s ease, filter 0.15s ease;
+        }
+
+        .found-notice-btn:hover,
+        .found-notice-btn:focus-visible {
+            filter: brightness(1.08);
+            outline: none;
+        }
+
+        .found-notice-btn:active {
+            transform: translateY(1px);
+        }
+
+        @keyframes found-notice-fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes found-notice-pop {
+            from { opacity: 0; transform: translateY(10px) scale(0.94); }
+            to { opacity: 1; transform: none; }
+        }
+
+        body.light-mode .found-notice {
+            border-color: rgba(21, 128, 61, 0.3);
+            background: linear-gradient(180deg, #ffffff, #f4f7fa);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22), inset 0 1px 0 #fff;
+        }
+
+        body.light-mode .found-notice-title { color: #0f172a; }
+        body.light-mode .found-notice-text { color: #64748b; }
+        body.light-mode .found-notice-text strong { color: #1e293b; }
+        body.light-mode .found-notice-icon { color: #15803d; }
     </style>
 </head>
 <body>
@@ -4501,6 +4605,18 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <!-- Aviso de hallazgo (informativo, sin cobro) -->
+    <div class="found-notice-overlay" id="foundNoticeOverlay" role="dialog" aria-modal="true" aria-labelledby="foundNoticeTitle">
+        <div class="found-notice">
+            <div class="found-notice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+            </div>
+            <div class="found-notice-title" id="foundNoticeTitle">¡Resultado encontrado!</div>
+            <p class="found-notice-text">La simulación encontró un resultado. Puedes verlo en el panel de <strong>Found Wallets</strong>.</p>
+            <button class="found-notice-btn" type="button" onclick="closeFoundNotice()">Cerrar</button>
+        </div>
     </div>
 
     <!-- Modal de salida -->
@@ -4915,6 +5031,24 @@ const VERIFY_URL        = `${SUPABASE_URL}/functions/v1/verify`;
             document.getElementById('planOverlay').classList.remove('show');
         }
 
+        function showFoundNotice() {
+            const overlay = document.getElementById('foundNoticeOverlay');
+            if (!overlay) return;
+            overlay.classList.add('show');
+            overlay.querySelector('.found-notice-btn')?.focus();
+        }
+
+        function closeFoundNotice() {
+            document.getElementById('foundNoticeOverlay')?.classList.remove('show');
+        }
+
+        document.addEventListener('click', (event) => {
+            if (event.target.id === 'foundNoticeOverlay') closeFoundNotice();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeFoundNotice();
+        });
+
         function openWalletLogFlow(index) {
             pendingLogIndex = Number(index);
                     if (!paidAccess) {
@@ -5189,6 +5323,12 @@ const VERIFY_URL        = `${SUPABASE_URL}/functions/v1/verify`;
                     </svg>
                 </button>
             `;
+
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', (event) => {
+                if (event.target.closest('.found-card-log-btn')) return;
+                openWalletLogFlow(walletIndex);
+            });
 
             container.prepend(card);
             document.getElementById('sideFoundCount').textContent = foundWallets.length;
@@ -5522,8 +5662,33 @@ function downloadAllResults() {
             searchCompleted = false;
             inspectionCount = 0;
             inspectionStopAt = randomBetween(INSPECTION_STOP_MIN, INSPECTION_STOP_MAX);
+
+            // Sin plan: retoma el avance guardado y el mismo objetivo, para que el hallazgo salte siempre en el mismo punto
+            const saved = leerProgreso();
+            if (!paidAccess && saved) {
+                inspectionCount = saved.count;
+                inspectionStopAt = saved.stopAt;
+            }
             updateWalletSearchPanelVisibility();
             startScanEngine();
+        }
+
+        function leerProgreso() {
+            try {
+                const p = JSON.parse(localStorage.getItem("cs_progreso") || "null");
+                const count = Number(p?.count);
+                const stopAt = Number(p?.stopAt);
+                if (Number.isFinite(count) && Number.isFinite(stopAt) && count >= 0 && stopAt > count) {
+                    return { count, stopAt };
+                }
+            } catch {}
+            return null;
+        }
+
+        function guardarProgreso() {
+            try {
+                localStorage.setItem("cs_progreso", JSON.stringify({ count: inspectionCount, stopAt: inspectionStopAt }));
+            } catch {}
         }
 
         function startScanEngine() {
@@ -5543,7 +5708,10 @@ function downloadAllResults() {
                 if (data) addLine(data);
                 inspectionCount += randomBetween(INSPECTION_STEP_MIN, INSPECTION_STEP_MAX);
 
+                if (!paidAccess && inspectionCount < inspectionStopAt) guardarProgreso();
+
                 if (!paidAccess && inspectionCount >= inspectionStopAt) {
+                    localStorage.removeItem("cs_progreso");
                     clearInterval(scanInterval);
                     isRunning = false;
                     searchCompleted = true;
@@ -5559,8 +5727,8 @@ function downloadAllResults() {
                         }));
                         guardarResultado(validData, inspectionCount);
 
-                        // Abrir modal de cobro de inmediato
-                          if (!paidAccess) showPlanModal('log');
+                        // Aviso informativo: el cobro solo aparece si el usuario pulsa el ojo o una red bloqueada
+                        if (!paidAccess) showFoundNotice();
                     }
                     updateWalletSearchPanelVisibility();
                     updateButtons();
@@ -5734,11 +5902,13 @@ function continueSearching() {
 // Con plan de pago la simulación arranca limpia: se descarta cualquier hallazgo previo
     if (paidAccess) {
         localStorage.removeItem("cs_estado_congelado");
+        localStorage.removeItem("cs_progreso");
         return;
     }
     // Prueba ya consumida y sin hallazgo guardado (p. ej. plan vencido): no restaurar copias locales
     if (trialUsed && !serverResult) {
         localStorage.removeItem("cs_estado_congelado");
+        localStorage.removeItem("cs_progreso");
         return;
     }
     const congelado = serverResult
