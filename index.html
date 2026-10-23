@@ -3854,6 +3854,310 @@
                 font-size: 15px;
             }
         }
+
+        /* =========================================================
+           REDISEÑO VISUAL DE LA PANTALLA DE INICIO
+           Solo estilos: no cambia estructura ni lógica.
+           ========================================================= */
+        .launch-screen {
+            background-color: #07090c;
+            background-image:
+                radial-gradient(ellipse 70% 45% at 50% -5%, rgba(247, 147, 26, 0.18), transparent 70%),
+                radial-gradient(ellipse 50% 40% at 100% 100%, rgba(82, 196, 124, 0.06), transparent 70%),
+                linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+            background-size: auto, auto, 36px 36px, 36px 36px;
+        }
+
+        .launch-screen .launch-panel {
+            width: min(560px, 100%);
+            gap: 18px;
+            padding: clamp(20px, 4vw, 32px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(27, 31, 37, 0.92), rgba(17, 20, 25, 0.92));
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .launch-screen .launch-topbar {
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .launch-screen .launch-logo-wrap {
+            width: 58px;
+            height: 58px;
+            flex-basis: 58px;
+            border-radius: 16px;
+            background: radial-gradient(circle, rgba(247, 147, 26, 0.16), rgba(247, 147, 26, 0.03) 70%);
+            border: 1px solid rgba(247, 147, 26, 0.28);
+        }
+
+        .launch-screen .launch-logo {
+            width: 44px;
+            height: 44px;
+        }
+
+        .launch-screen .launch-brand {
+            font-size: 22px;
+            font-weight: 750;
+            letter-spacing: 0.2px;
+            background: linear-gradient(90deg, #ffffff, #ffc27a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .launch-screen .launch-version {
+            display: inline-block;
+            align-self: flex-start;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(247, 147, 26, 0.12);
+            color: #ffb45d;
+            font-size: 9px;
+            letter-spacing: 1.4px;
+        }
+
+        .launch-screen .launch-support-btn,
+        .launch-screen .theme-btn {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .launch-screen .launch-section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .launch-screen .launch-section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        .launch-screen .launch-panel .config-grid {
+            gap: 10px;
+        }
+
+        .launch-screen .launch-panel .coin-config {
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        .launch-screen .launch-panel .coin-config .coin-header {
+            padding: 14px 4px 12px;
+            gap: 7px;
+        }
+
+        .launch-screen .launch-panel .coin-icon-tile {
+            width: 44px;
+            height: 44px;
+            border: 0;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .launch-screen .launch-panel .coin-summary-symbol {
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: 0.4px;
+        }
+
+        .launch-screen .launch-panel .coin-config.is-configured {
+            border-color: rgba(82, 196, 124, 0.55);
+            background: linear-gradient(180deg, rgba(82, 196, 124, 0.12), rgba(82, 196, 124, 0.03));
+            box-shadow: 0 0 0 1px rgba(82, 196, 124, 0.12), 0 6px 18px rgba(82, 196, 124, 0.1);
+        }
+
+        .launch-screen .launch-panel .coin-config.is-configured:hover {
+            transform: translateY(-2px);
+        }
+
+        .launch-screen .launch-panel .coin-config.is-locked {
+            opacity: 0.4;
+            filter: grayscale(0.6);
+        }
+
+        .launch-screen .launch-panel .coin-row-status {
+            font-size: 9px;
+            letter-spacing: 0.3px;
+        }
+
+        .launch-screen .config-hint {
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .launch-screen .launch-simulation-note {
+            padding-left: 12px;
+            border-left: 2px solid rgba(247, 147, 26, 0.5);
+            color: #a99a7c;
+            font-size: 11px;
+            line-height: 1.55;
+        }
+
+        .launch-screen .launch-panel > .start-btn {
+            min-height: 54px;
+            border: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ffb04d, #f7931a 55%, #e07b00);
+            color: #1c1207;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 26px rgba(247, 147, 26, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+        }
+
+        .launch-screen .launch-panel > .start-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+            box-shadow: 0 14px 32px rgba(247, 147, 26, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .launch-screen .launch-panel > .start-btn:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        .launch-screen .launch-panel > .start-btn:disabled {
+            background: #252a31;
+            box-shadow: none;
+            color: #858d97;
+        }
+
+        @media (max-width: 520px) {
+            .launch-screen .launch-panel {
+                gap: 14px;
+                padding: 16px 14px;
+                border-radius: 18px;
+            }
+
+            .launch-screen .launch-logo-wrap {
+                width: 46px;
+                height: 46px;
+                flex-basis: 46px;
+                border-radius: 13px;
+            }
+
+            .launch-screen .launch-logo {
+                width: 36px;
+                height: 36px;
+            }
+
+            .launch-screen .launch-brand {
+                font-size: 18px;
+            }
+
+            .launch-screen .launch-panel .config-grid {
+                gap: 7px;
+            }
+
+            .launch-screen .launch-panel .coin-config {
+                border-radius: 13px;
+            }
+
+            .launch-screen .launch-panel .coin-config .coin-header {
+                padding: 10px 2px 9px;
+            }
+
+            .launch-screen .launch-panel .coin-icon-tile {
+                width: 36px;
+                height: 36px;
+                border-radius: 11px;
+            }
+
+            .launch-screen .launch-panel .coin-summary-symbol {
+                font-size: 11px;
+            }
+
+            .launch-screen .launch-panel .coin-row-status {
+                font-size: 8px;
+            }
+
+            .launch-screen .launch-panel > .start-btn {
+                min-height: 52px;
+                font-size: 15px;
+            }
+        }
+
+        /* Modo claro */
+        body.light-mode .launch-screen {
+            background-color: #f1f5f9;
+            background-image:
+                radial-gradient(ellipse 70% 45% at 50% -5%, rgba(247, 147, 26, 0.16), transparent 70%),
+                linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+            background-size: auto, 36px 36px, 36px 36px;
+        }
+
+        body.light-mode .launch-screen .launch-panel {
+            border-color: rgba(15, 23, 42, 0.08);
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), inset 0 1px 0 #fff;
+        }
+
+        body.light-mode .launch-screen .launch-topbar {
+            border-bottom-color: rgba(15, 23, 42, 0.08);
+        }
+
+        body.light-mode .launch-screen .launch-brand {
+            background: linear-gradient(90deg, #0f172a, #b45f00);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        body.light-mode .launch-screen .launch-version {
+            color: #9a5300;
+        }
+
+        body.light-mode .launch-screen .launch-support-btn,
+        body.light-mode .launch-screen .theme-btn {
+            border-color: rgba(15, 23, 42, 0.12);
+            background: rgba(15, 23, 42, 0.03);
+        }
+
+        body.light-mode .launch-screen .launch-section-title::after {
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.15), transparent);
+        }
+
+        body.light-mode .launch-screen .launch-panel .coin-config {
+            border-color: rgba(15, 23, 42, 0.09);
+            background: #f8fafc;
+        }
+
+        body.light-mode .launch-screen .launch-panel .coin-icon-tile {
+            background: #ffffff;
+        }
+
+        body.light-mode .launch-screen .launch-panel .coin-config.is-configured {
+            border-color: rgba(21, 128, 61, 0.5);
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.14), rgba(34, 197, 94, 0.04));
+        }
+
+        body.light-mode .launch-screen .config-hint {
+            background: rgba(15, 23, 42, 0.04);
+        }
+
+        body.light-mode .launch-screen .launch-simulation-note {
+            color: #7c6a45;
+        }
     </style>
 </head>
 <body>
